@@ -23,6 +23,6 @@ public class WorkoutProgram {
     @JoinColumn(name = "userId")
     private User user;
 
-    @OneToMany(mappedBy = "WorkoutProgram", cascade =CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "workoutProgram", cascade =CascadeType.ALL,orphanRemoval = true)
     private List<Exercise> exercises = new ArrayList<>();
 }
