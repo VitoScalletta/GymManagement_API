@@ -1,6 +1,7 @@
 package org.example.gymmanagement_api.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.jdbc.Work;
 
 @Entity
 @Table(name = "exercises")
@@ -14,11 +15,12 @@ public class Exercise {
     private String name;
 
     @Column(name = "sets",nullable = false)
-    private Long sets;
+    private int sets;
 
     @Column(name = "reps",nullable = false)
-    private Long reps;
+    private int reps;
 
-    @Column(name = "workout_program_id",nullable = false)
-    private Long workoutProgramId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "workout_program_id",nullable = false)
+    private WorkoutProgram workoutProgram;
 }
