@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface WorkoutProgramRepository extends JpaRepository {
+public interface WorkoutProgramRepository extends JpaRepository<WorkoutProgram, Long> {
     List<WorkoutProgram> findByUserId(Long userId);
 
 
