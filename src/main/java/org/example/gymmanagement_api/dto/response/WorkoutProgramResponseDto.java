@@ -12,6 +12,6 @@ public class WorkoutProgramResponseDto {
     private String name;
     private String description;
     private UserResponseDto user;
-    private List<ExerciseRequestDto> exercises;
+    private List<ExerciseResponseDto> exercises;
 
 }
