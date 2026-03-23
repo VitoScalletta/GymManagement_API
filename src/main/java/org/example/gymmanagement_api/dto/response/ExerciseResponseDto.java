@@ -6,7 +6,7 @@ import lombok.Data;
 public class ExerciseResponseDto {
     private Long id;
     private String name;
-    private int sets;
-    private int reps;
+    private Integer sets;
+    private Integer reps;
 
 }

@@ -50,9 +50,15 @@ public class MembershipServiceImpl implements MembershipPlanService {
         MembershipPlan existingPlan = membershipPlanRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Hata : Paket bulunamadı"));
 
-        existingPlan.setId(MembershipPlanResponseDto.);
+        if (!existingPlan.getName().equals(requestDto.getName()) && membershipPlanRepository.existsByName(requestDto.getName())) {
+            throw new BusinessRuleException("Hata : Böyle bir paket mevcut!!");
+        }
 
+        modelMapper.map(requestDto, existingPlan);
+        MembershipPlan updatedMembershipPlan = modelMapper.map(requestDto, MembershipPlan.class);
+        return modelMapper.map(updatedMembershipPlan , MembershipPlanResponseDto.class);
     }
+
 
     @Override
     public void deleteMembershipPlan(Long id) {
