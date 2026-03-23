@@ -1,8 +1,12 @@
 package org.example.gymmanagement_api.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.jdbc.Work;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "exercises")
 public class Exercise {
@@ -15,10 +19,10 @@ public class Exercise {
     private String name;
 
     @Column(name = "sets",nullable = false)
-    private int sets;
+    private Integer sets;
 
     @Column(name = "reps",nullable = false)
-    private int reps;
+    private Integer reps;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "workout_program_id",nullable = false)

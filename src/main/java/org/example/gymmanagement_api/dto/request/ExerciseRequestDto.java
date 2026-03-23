@@ -14,4 +14,8 @@ public class ExerciseRequestDto {
     @NotNull(message = "Set boş bırakılamaz")
     @Positive(message = "1den fazla olmalı")
     private Integer sets;
+
+    @NotNull(message = "Tekrar boş bırakılamaz")
+    @Positive(message = "Tekrar sayısı 1den fazla olmalı")
+    private Integer reps;
 }

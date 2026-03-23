@@ -47,7 +47,11 @@ public class MembershipServiceImpl implements MembershipPlanService {
 
     @Override
     public MembershipPlanResponseDto updateMembershipPlan(Long id, MembershipPlanRequestDto requestDto) {
-        return null;
+        MembershipPlan existingPlan = membershipPlanRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Hata : Paket bulunamadı"));
+
+        existingPlan.setId(MembershipPlanResponseDto.);
+
     }
 
     @Override

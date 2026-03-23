@@ -1,8 +1,11 @@
 package org.example.gymmanagement_api.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-
+@Getter
+@Setter
 @Entity
 @Table(name = "membershipPlans")
 public class MembershipPlan {
