@@ -55,7 +55,7 @@ public class MembershipServiceImpl implements MembershipPlanService {
         }
 
         modelMapper.map(requestDto, existingPlan);
-        MembershipPlan updatedMembershipPlan = modelMapper.map(requestDto, MembershipPlan.class);
+        MembershipPlan updatedMembershipPlan = membershipPlanRepository.save(existingPlan);
         return modelMapper.map(updatedMembershipPlan , MembershipPlanResponseDto.class);
     }
 
