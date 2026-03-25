@@ -17,6 +17,7 @@ public class GlobalExceptionHandler{
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorDetails> handleResourceNotFoundException(ResourceNotFoundException exception, WebRequest webRequest){
+        exception.printStackTrace();
         ErrorDetails errorDetails = new ErrorDetails(
                 LocalDateTime.now(),
                 exception.getMessage(),
@@ -27,6 +28,7 @@ public class GlobalExceptionHandler{
 
     @ExceptionHandler(BusinessRuleException.class)
     public ResponseEntity<ErrorDetails> handleBusinessRuleException(Exception exception, WebRequest webRequest){
+        exception.printStackTrace();
         ErrorDetails errorDetails = new ErrorDetails(
                 LocalDateTime.now(),
                 exception.getMessage(),
@@ -37,6 +39,7 @@ public class GlobalExceptionHandler{
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String,String>> handleValidationException(MethodArgumentNotValidException exception, WebRequest webRequest){
+        exception.printStackTrace();
         Map<String,String> errors = new HashMap<>();
 
         exception.getBindingResult().getFieldErrors().forEach((error) -> {
@@ -50,6 +53,7 @@ public class GlobalExceptionHandler{
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorDetails> handleGlobalException(Exception exception, WebRequest webRequest){
+        exception.printStackTrace();
         ErrorDetails errorDetails = new ErrorDetails(
                 LocalDateTime.now(),
               "An unexcepted error occured in the system"+exception.getMessage(),
