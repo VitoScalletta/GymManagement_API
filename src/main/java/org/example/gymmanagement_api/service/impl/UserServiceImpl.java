@@ -9,6 +9,7 @@ import org.example.gymmanagement_api.exception.ResourceNotFoundException;
 import org.example.gymmanagement_api.repository.UserRepository;
 import org.example.gymmanagement_api.service.interfaces.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserResponseDto createUser(UserRequestDto request){
@@ -26,6 +28,7 @@ public class UserServiceImpl implements UserService {
             throw new BusinessRuleException("Hata : Böyle bir email zaten kayıtlı");
         }
         User createUser = modelMapper.map(request,User.class);
+        createUser.setPassword(passwordEncoder.encode(request.getPassword()));
         User savedUser = userRepository.save(createUser);
         return modelMapper.map(savedUser,UserResponseDto.class);
     }
