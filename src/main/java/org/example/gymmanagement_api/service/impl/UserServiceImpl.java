@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUserById(Long id){
-        if (userRepository.existsById(id)){
+        if (!userRepository.existsById(id)){
             throw new ResourceNotFoundException("Hata : Silmek istediğiniz id bulunamadı");
         }
 
