@@ -3,6 +3,7 @@ package org.example.gymmanagement_api.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.example.gymmanagement_api.dto.request.UserRequestDto;
 import org.example.gymmanagement_api.dto.response.UserResponseDto;
+import org.example.gymmanagement_api.entity.Role;
 import org.example.gymmanagement_api.entity.User;
 import org.example.gymmanagement_api.exception.BusinessRuleException;
 import org.example.gymmanagement_api.exception.ResourceNotFoundException;
@@ -29,6 +30,8 @@ public class UserServiceImpl implements UserService {
         }
         User createUser = modelMapper.map(request,User.class);
         createUser.setPassword(passwordEncoder.encode(request.getPassword()));
+        createUser.setRole(Role.MEMBER);
+        createUser.setActive(true);
         User savedUser = userRepository.save(createUser);
         return modelMapper.map(savedUser,UserResponseDto.class);
     }
