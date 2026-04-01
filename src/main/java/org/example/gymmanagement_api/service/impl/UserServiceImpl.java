@@ -10,6 +10,7 @@ import org.example.gymmanagement_api.exception.ResourceNotFoundException;
 import org.example.gymmanagement_api.repository.UserRepository;
 import org.example.gymmanagement_api.service.interfaces.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -67,6 +68,14 @@ public class UserServiceImpl implements UserService {
         }
 
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public User getCurrenUser() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User currentUser = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Hata : Böyle bir email yok"));
+        return currentUser;
     }
 
 

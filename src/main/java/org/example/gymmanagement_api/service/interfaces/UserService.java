@@ -3,6 +3,7 @@ package org.example.gymmanagement_api.service.interfaces;
 import jakarta.validation.Valid;
 import org.example.gymmanagement_api.dto.request.UserRequestDto;
 import org.example.gymmanagement_api.dto.response.UserResponseDto;
+import org.example.gymmanagement_api.entity.User;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -14,5 +15,6 @@ public interface UserService {
     UserResponseDto getUserById(Long id);
     UserResponseDto updateUser(Long id,UserRequestDto userRequestDto);
     void deleteUserById(Long id);
+    User getCurrenUser();
 
 }

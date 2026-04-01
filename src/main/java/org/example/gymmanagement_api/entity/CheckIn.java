@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Entity
@@ -19,8 +21,8 @@ public class CheckIn {
     private User user;
 
     @Column(name = "checkIn_Time",nullable = false)
-    private String checkInTime;
+    private LocalDateTime checkInTime;
 
     @Column(name = "chechOut_Time",nullable = false)
-    private String checkOutTime;
+    private LocalDateTime checkOutTime;
 }
