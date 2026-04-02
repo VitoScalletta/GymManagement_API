@@ -5,6 +5,7 @@ import org.example.gymmanagement_api.dto.request.ExerciseRequestDto;
 import org.example.gymmanagement_api.dto.request.WorkoutProgramRequestDto;
 import org.example.gymmanagement_api.dto.response.ExerciseResponseDto;
 import org.example.gymmanagement_api.dto.response.WorkoutProgramResponseDto;
+import org.example.gymmanagement_api.entity.Exercise;
 import org.example.gymmanagement_api.entity.Role;
 import org.example.gymmanagement_api.entity.User;
 import org.example.gymmanagement_api.entity.WorkoutProgram;
@@ -44,6 +45,16 @@ public class WorkoutProgramServiceImpl implements WorkoutProgramService {
 
     @Override
     public ExerciseResponseDto addExerciseToProgram(Long prorgramId, ExerciseRequestDto requestDto) {
-        return null;
+        User CurrentUSer = userService.getCurrenUser();
+        if (CurrentUSer.getRole() != Role.TRAINER) {
+            throw new BusinessRuleException("Programlara egzeriz ekleyemessin");
+        }
+        WorkoutProgram program = workoutProgramRepository.findById(prorgramId)
+                .orElseThrow(()-> new ResourceNotFoundException("Program bulunamadı"));
+        Exercise exercise = modelMapper.map(requestDto, Exercise.class);
+        exercise.setWorkoutProgram(program);
+        Exercise savedExercise = exerciseRepository.save(exercise);
+        return modelMapper.map(savedExercise, ExerciseResponseDto.class);
+
     }
 }
