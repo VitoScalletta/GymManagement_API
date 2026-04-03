@@ -34,9 +34,9 @@ public class CheckInServiceImpl implements CheckInService {
         }
 
         LocalDateTime startOfDay = LocalDateTime.now().with(LocalTime.MIN);
-        LocalDateTime endOfDay = LocalDateTime.now().with(LocalDateTime.MAX);
+        LocalDateTime endOfDay = LocalDateTime.now().with(LocalTime.MAX);
 
-        boolean alreadyCheckIn = checkInRepository.hasUserCheckInToday(currentUser, startOfDay, endOfDay);
+        boolean alreadyCheckIn = checkInRepository.existsByUserAndCheckInTimeBetween(currentUser, startOfDay, endOfDay);
 
         if(alreadyCheckIn){
             throw new BusinessRuleException("Hata : Bugün zaten giriş yapıldı");
@@ -48,7 +48,7 @@ public class CheckInServiceImpl implements CheckInService {
         checkIn.setCheckOutTime(LocalDateTime.now().plusHours(2));
 
         CheckIn savedCheckIn = checkInRepository.save(checkIn);
-        return modelMapper.map(checkIn,CheckInResponseDto.class);
+        return modelMapper.map(savedCheckIn,CheckInResponseDto.class);
 
     }
 
