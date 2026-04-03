@@ -27,7 +27,7 @@ public class CheckInServiceImpl implements CheckInService {
     @Override
     public CheckInResponseDto doCheckIn() {
         User currentUser = userService.getCurrenUser();
-        boolean hasActivePlan =  userMembershipRepository.existsByUserAndIsActiveTrueAndDateTimeAfter(currentUser , LocalDateTime.now());
+        boolean hasActivePlan =  userMembershipRepository.existsByUserAndIsActiveTrueAndEndDateTimeAfter(currentUser , LocalDateTime.now());
 
         if(!hasActivePlan){
             throw new BusinessRuleException("Aktif paketiniz bulunmamaktadır");
@@ -36,7 +36,7 @@ public class CheckInServiceImpl implements CheckInService {
         LocalDateTime startOfDay = LocalDateTime.now().with(LocalTime.MIN);
         LocalDateTime endOfDay = LocalDateTime.now().with(LocalDateTime.MAX);
 
-        boolean alreadyCheckIn = checkInRepository.existsByUserAndCheckInTimeBeetween(currentUser, startOfDay, endOfDay);
+        boolean alreadyCheckIn = checkInRepository.hasUserCheckInToday(currentUser, startOfDay, endOfDay);
 
         if(alreadyCheckIn){
             throw new BusinessRuleException("Hata : Bugün zaten giriş yapıldı");
