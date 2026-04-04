@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Component
@@ -21,10 +22,10 @@ public class MembershipExpirationTask {
     @Scheduled(cron = "*/10 * * * * ?")//test icin
     public void checkExpiredMembershipPlans() {
         log.info("Üyelikler kontrol ediliyor!...");
-        LocalDateTime targetTime = LocalDateTime.now().plusDays(3);
+        LocalDate targetTime = LocalDate.now().plusDays(3);
 
-        LocalDateTime startOfDay = targetTime.with(LocalDateTime.MIN);
-        LocalDateTime endOfDay = targetTime.with(LocalDateTime.MAX);
+        LocalDateTime startOfDay = targetTime.atStartOfDay();
+        LocalDateTime endOfDay = targetTime.atTime(23,59,59);
 
         List<UserMembership> expiringMembership = userMembershipRepository
                 .findByIsActiveTrueAndEndDateTimeBetween(startOfDay, endOfDay);

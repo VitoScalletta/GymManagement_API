@@ -9,6 +9,7 @@ import org.example.gymmanagement_api.exception.ResourceNotFoundException;
 import org.example.gymmanagement_api.repository.MembershipPlanRepository;
 import org.example.gymmanagement_api.service.interfaces.MembershipPlanService;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +41,7 @@ public class MembershipServiceImpl implements MembershipPlanService {
     }
 
     @Override
-    @Cacheable(value = "membershipPlans")
+    @CacheEvict(value = "membershipPlans", allEntries = true)
     public List<MembershipPlanResponseDto> getAllMembershipPlan() {
         List<MembershipPlan> membershipPlans = membershipPlanRepository.findAll();
         return membershipPlans.stream()
@@ -49,7 +50,7 @@ public class MembershipServiceImpl implements MembershipPlanService {
     }
 
     @Override
-    @Cacheable(value = "membershipPlans")
+    @CacheEvict(value = "membershipPlans", allEntries = true)
     public MembershipPlanResponseDto updateMembershipPlan(Long id, MembershipPlanRequestDto requestDto) {
         MembershipPlan existingPlan = membershipPlanRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Hata : Paket bulunamadı"));
@@ -65,7 +66,7 @@ public class MembershipServiceImpl implements MembershipPlanService {
 
 
     @Override
-    @Cacheable(value = "membershipPlans")
+    @CacheEvict(value ="membershipPlans",allEntries = true)
     public void deleteMembershipPlan(Long id) {
         if (!membershipPlanRepository.existsById(id)){
             throw new ResourceNotFoundException("Hata : Silmek istenen "+id+" numaralı paket bulunamadı");
