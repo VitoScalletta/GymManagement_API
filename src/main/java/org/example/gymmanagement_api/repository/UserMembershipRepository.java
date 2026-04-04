@@ -5,8 +5,9 @@ import org.example.gymmanagement_api.entity.UserMembership;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public interface UserMembershipRepository extends JpaRepository<UserMembership, Long> {
     boolean existsByUserAndIsActiveTrueAndEndDateTimeAfter(User user, LocalDateTime date);
-
+    List<UserMembership> findByIsActiveTrueAndEndDateTimeBetween(LocalDateTime start, LocalDateTime end);
 }
